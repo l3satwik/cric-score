@@ -5,3 +5,4 @@ idna==2.5
 notify2==0.3.1
 requests==2.17.3
 urllib3==1.21.1
+pushbullet.py==0.10.0

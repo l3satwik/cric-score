@@ -4,6 +4,7 @@ import requests
 import re
 import time
 import notify2
+from pushbullet import Pushbullet
 
 def visible(element):
     if element.parent.name in ['style', 'script', '[document]', 'head', 'title']:
@@ -12,6 +13,9 @@ def visible(element):
         return False
     return True
 
+api_key = raw_input("Enter your API Key ('0' if you don't want Pushbullet notifications): ")
+if api_key != "0":
+    pb = Pushbullet(api_key)
 notify2.init("cric-score")
 url = "http://www.cricbuzz.com/cricket-match/live-scores"
 r = requests.get(url)
@@ -40,6 +44,9 @@ while True:
         print("### 6 ###")
         n = notify2.Notification("### 6 ###")
         n.show()
+        if api_key != "0":
+            motog = pb.devices[1] #currently only for my phone
+            push = pb.push_note("Cricket Notification", "6 has been hit!!", device=motog)
         no6 = visible_update[0].count('6')
     else:
         no6 = visible_update[0].count('6')
