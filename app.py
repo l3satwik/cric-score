@@ -18,11 +18,19 @@ if api_key != "0":
     pb = Pushbullet(api_key)
 notify2.init("cric-score")
 url = "http://www.cricbuzz.com/cricket-match/live-scores"
-r = requests.get(url)
+try:
+    r = requests.get(url)
+except Exception:
+    print("Please check your internet connection and try again!")
+    raise SystemExit
 data = r.text
 soup = bs(data, "html.parser")
 link = soup.find_all('a', class_='cb-lv-scrs-well-live')
-match_url = "http://www.cricbuzz.com" + link[0].get('href')
+try:
+    match_url = "http://www.cricbuzz.com" + link[0].get('href')
+except Exception:
+    print("Cricbuzz is using another HTML structure!")
+    raise SystemExit
 print("Match URL: " + match_url)
 no6 = 0
 noW = 0
